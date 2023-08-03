@@ -1,0 +1,63 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.home-body{
+    width: 100%;
+}
+
+.discount-hdfc-image{
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 1%;
+}
+
+.discount-hdfc-image>img{
+    width: 100%;
+}
+
+.header-slider-image{
+    width: 86%;
+    margin:1% 7%;
+}
+
+.header-slider-image>img{
+    width: 100%;
+}
+
+.header-delivery-image{
+    width: 76%;
+    margin: 1% 12%;
+}
+
+.header-delivery-image>img{
+    width: 100%;
+}
+
+.header-feature-brand{
+    width: 100%;
+}
+
+.header-feature-brand>img{
+    width: 100%;
+}
+
+.header-umbrella-heading-css{
+    width: 86%;
+    display: flex;
+    margin-left: 7%;
+    margin-right: 7%;
+    justify-content: space-between;
+}
+
+.header-umbrella-body-css{
+    width: 22%;
+}
+
+.header-umbrella-body-css>img{
+    width: 100%;
+}
+

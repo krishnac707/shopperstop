@@ -1,0 +1,81 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#login-div-css {
+    position: fixed;
+    top: 0;
+    z-index: 3;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    height: 100vh;
+    width: 100%;
+}
+
+.inner-login-div-css{
+position: relative;
+left: 72%;
+width: 28%;
+background-color: #FFF;
+}
+
+.inner-login-heading-div-css{
+    width: 100%;
+    height: 250px;
+    background-color: black;
+    color: white;
+    padding: 6%;
+}
+
+.inner-login-button-div-css{
+    width: 100%;
+    margin-top: 10%;
+    margin-bottom: 25%;
+    display: flex;
+    justify-content: end;
+}
+
+.inner-login-button-css{
+    border: none;
+    background-color: black;
+    border-bottom: 1px solid white;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.login-form-div-css{
+    width: 100%;
+    padding: 12% 8%;
+}
+
+.login-form-input-css{
+    text-decoration: none;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid;
+    width: 100%;
+    font-size: 18px;
+    margin-bottom: 5%;
+    padding-bottom: 1%;
+}
+
+.login-form-submit-button-css{
+    width: 100%;
+    text-align: center;
+    padding: 4%;
+    background-color: black;
+    color: white;
+    font-size: 19px;
+    cursor: pointer;
+    margin-bottom: 3%;
+}
+
+.login-form-signup-button-css{
+    border: none;
+    background-color: white;
+    border-bottom: 1px solid black;
+    color: rgb(68, 0, 255);
+}
