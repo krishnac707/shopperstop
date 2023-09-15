@@ -1,51 +1,43 @@
 import { createContext, useEffect, useReducer } from "react";
-import { useNavigate } from "react-router-dom";
-
+import axios from 'axios';
 
 export const AuthContext = createContext();
 const initialState = ({ user: null });
 const reducer = (state, action) => {
     switch (action?.type) {
-        case 'login':
+        case 'LOGIN':
             return { user: action.payload };
-        case 'logout':
+        case 'LOGOUT':
             return { user: null };
-        case 'default':
+        default:
             return state;
     }
 }
 
 const AuthProvider = ({ children }) => {
-    const router = useNavigate();
     const [state, dispatch] = useReducer(reducer, initialState);
-    const login = (userdata) => {
-        localStorage.setItem("CurrentUser", JSON.stringify(userdata))
-        dispatch({
-            type: 'login',
-            payload: userdata
-        })
-    }
-
-    const logout = () => {
-        localStorage.removeItem("CurrentUser");
-        dispatch({
-            type: "logout",
-        })
-        router('/');
-    }
 
     useEffect(() => {
-        const isUserPresent = JSON.parse(localStorage.getItem("CurrentUser"));
-        if (isUserPresent) {
-            dispatch({
-                type: 'login',
-                payload: isUserPresent
-            })
+        const getCurrentUser = async () => {
+            var token = JSON.parse(localStorage.getItem("shopperstopToken"));
+            const response = await axios.post("http://localhost:8007/get-current-user", { token });
+            if (response.data.success) {
+                dispatch({
+                    type: "LOGIN",
+                    payload: response?.data?.user
+                })
+            }
+            // else{
+            //     dispatch({
+            //         type:"LOGOUT",
+            //     })
+            // }
         }
+        getCurrentUser();
     }, [])
 
     return (
-        <AuthContext.Provider value={{ state, login, logout }}>
+        <AuthContext.Provider value={{ state, dispatch }}>
             {children}
         </AuthContext.Provider>
     )

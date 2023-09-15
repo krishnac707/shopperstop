@@ -1,37 +1,57 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './Register.css';
 import { useNavigate } from 'react-router-dom';
 import { DataContext } from '../../context/Data.context';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
+import { AuthContext } from '../../context/Auth.context';
 
 const Register = () => {
-    const { setLoginSignup, setLoginButton, loginbutton, loginSignup } = useContext(DataContext);
-    const [dropdownmenu,setdropdownmenu] = useState(false);
-    const [userData, setUserData] = useState({ name: "", email: "", password: "" });
+    const { setLoginSignup, setLoginButton, loginSignup } = useContext(DataContext);
+    // const [dropdownmenu,setdropdownmenu] = useState(false);
+    const [userData, setUserData] = useState({ name: "", email: "", password: "",confirmPassword:"", role: 'Buyer' });
+    const {state} = useContext(AuthContext)
     const router = useNavigate();
 
     const formValue = (event) => {
         setUserData({ ...userData, [event.target.name]: event.target.value });
     }
 
-    const formSubmit = (event) => {
+    const selectRole = (event) => {
+        setUserData({ ...userData, ["role"]: event.target.value })
+    }
+
+    const formSubmit = async (event) => {
         event.preventDefault();
-        if (userData.name && userData.email && userData.password) {
-            const user = JSON.parse(localStorage.getItem("Users")) || [];
-            var userObj = {
-                name: userData.name,
-                email: userData.email,
-                password: userData.password,
-                cart:[]
+        if (userData.name && userData.email && userData.password && userData.confirmPassword && userData.role) {
+            if (userData.password === userData.confirmPassword) {
+                const response = await axios.post("http://localhost:8007/register", { userData })
+                if (response.data.success) {
+                    setUserData({ name: "", email: "", password: "", confirmPassword: "", role: "Buyer" })
+                    router("/login");
+                    toast.success(response.data.message);
+                    setLoginSignup(false);
+                    setLoginButton(true);
+
+                }
+                else {
+                    toast.error(response.data.message)
+                }
             }
-            user.push(userObj)
-            localStorage.setItem("Users", JSON.stringify(user));
-            alert("Register successfull");
-            setLoginSignup(false);
+            else {
+                toast.error("Password and confirm password is not matched")
+            }
         }
         else {
-            alert("please fill all data");
+            toast.error("All fields are mandatory")
         }
     }
+
+    useEffect(() => {
+        if (state?.user?.name) {
+            router('/')
+        }
+    }, [state])
 
     const handleSignup = () => {
         setLoginSignup(false);
@@ -53,6 +73,11 @@ const Register = () => {
                         <input type="text" className='login-form-input-css' name='name' onChange={formValue} placeholder='Enter Name' /><br />
                         <input type="email" className='login-form-input-css' name='email' onChange={formValue} placeholder='Enter Email' /><br />
                         <input type="password" className='login-form-input-css' name='password' onChange={formValue} placeholder='Enter Password' /><br />
+                        <input type="password" className='login-form-input-css' name='confirmPassword' onChange={formValue} placeholder='Confirm Password' /><br />
+                        <select className='form-select-css' onChange={selectRole}>
+                            <option value="Buyer">Buyer</option>
+                            <option value="Seller">Seller</option>
+                        </select>
                         <input type="submit" className='login-form-submit-button-css' value="Submit" />
                     </form>
                     <div>

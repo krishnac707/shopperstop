@@ -6,17 +6,43 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import AuthProvider from './context/Auth.context';
 import { DataProvider } from './context/Data.context';
+import { Toaster } from 'react-hot-toast';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
+    <AuthProvider>
+      <BrowserRouter>
+        <Toaster
+          position="top-center"
+          reverseOrder={false}
+          gutter={8}
+          containerClassName=""
+          containerStyle={{}}
+          toastOptions={{
+            // Define default options
+            className: '',
+            duration: 5000,
+            style: {
+              background: '#363636',
+              color: '#fff',
+            },
+
+            // Default options for specific types
+            success: {
+              duration: 3000,
+              theme: {
+                primary: 'green',
+                secondary: 'black',
+              },
+            },
+          }}
+        />
         <DataProvider>
-        <App />
+          <App />
         </DataProvider>
-      </AuthProvider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </AuthProvider>
   </React.StrictMode>
 );
 
